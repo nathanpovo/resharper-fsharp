@@ -1,10 +1,10 @@
-// ${COMPLETE_ITEM:B}
+// ${COMPLETE_ITEM:Bb}
 module Module
 
 [<RequireQualifiedAccess>]
 type U =
     | A
-    | B of int
+    | Bb of int
 
 match U.A with
-| U.{caret}
+| U.B{caret}

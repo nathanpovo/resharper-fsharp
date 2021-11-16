@@ -3,6 +3,7 @@ namespace JetBrains.ReSharper.Plugins.FSharp.Tests.Features
 open System
 open JetBrains.ReSharper.FeaturesTestFramework.Completion
 open JetBrains.ReSharper.Plugins.FSharp.Psi.Features.CodeCompletion
+open JetBrains.ReSharper.Plugins.FSharp.Services.Formatter
 open JetBrains.ReSharper.Plugins.FSharp.Settings
 open JetBrains.ReSharper.Plugins.FSharp.Tests
 open JetBrains.ReSharper.TestFramework
@@ -43,6 +44,9 @@ type FSharpCompletionTest() =
     [<Test>] member x.``Lambda - Pipe 02``() = x.DoNamedTest()
     [<Test>] member x.``Lambda - Pipe 03 - Parens``() = x.DoNamedTest()
 
+    [<Test>] member x.``Pattern - Enum - Rqa 01``() = x.DoNamedTest()
+    [<Test>] member x.``Pattern - Enum - Rqa 02 - Nested``() = x.DoNamedTest()
+    [<Test>] member x.``Pattern - Enum 01 - Replace qualified``() = x.DoNamedTest()
     [<Test>] member x.``Pattern - Union case - Escaped 01``() = x.DoNamedTest()
     [<Test>] member x.``Pattern - Union case - Escaped 02 - Rqa``() = x.DoNamedTest()
     [<Test>] member x.``Pattern - Union case - Import 01``() = x.DoNamedTest()
@@ -54,9 +58,9 @@ type FSharpCompletionTest() =
     [<Test>] member x.``Pattern - Union case - No Fields 02``() = x.DoNamedTest()
     [<Test>] member x.``Pattern - Union case - No fields 03 - Rqa``() = x.DoNamedTest()
     [<Test>] member x.``Pattern - Union case - Not matching type 01``() = x.DoNamedTest()
-    [<Test; Explicit("Fcs completion fails")>] member x.``Pattern - Union case - Qualified 01``() = x.DoNamedTest()
-    [<Test; Explicit("Fcs completion fails")>] member x.``Pattern - Union case - Qualified 02``() = x.DoNamedTest()
-    [<Test; Explicit("Fcs completion fails")>] member x.``Pattern - Union case - Qualified 03 - Module``() = x.DoNamedTest()
+    [<Test>] member x.``Pattern - Union case - Qualified 01``() = x.DoNamedTest()
+    [<Test>] member x.``Pattern - Union case - Qualified 02``() = x.DoNamedTest()
+    [<Test; Explicit("Fcs completion fails")>] member x.``Pattern - Union case - Qualified 03``() = x.DoNamedTest()
     [<Test>] member x.``Pattern - Union case 01``() = x.DoNamedTest()
     [<Test>] member x.``Pattern - Union case 02``() = x.DoNamedTest()
     [<Test>] member x.``Pattern - Union case 03``() = x.DoNamedTest()
@@ -65,6 +69,8 @@ type FSharpCompletionTest() =
     [<Test>] member x.``Pattern - Union case 06``() = x.DoNamedTest()
     [<Test>] member x.``Pattern - Union case 07``() = x.DoNamedTest()
     [<Test>] member x.``Pattern - Union case 08 - Module Rqa``() = x.DoNamedTest()
+    [<TestSetting(typeof<FSharpFormatSettingsKey>, "SpaceBeforeUppercaseInvocation", "true")>]
+    [<Test>] member x.``Pattern - Union case 09 - Space``() = x.DoNamedTest()
 
     [<Test>] member x.``To recursive - Escape 01``() = x.DoNamedTest()
     [<Test>] member x.``To recursive - Local 01``() = x.DoNamedTest()

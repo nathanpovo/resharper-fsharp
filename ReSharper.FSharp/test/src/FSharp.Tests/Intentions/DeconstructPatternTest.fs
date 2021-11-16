@@ -1,13 +1,23 @@
 namespace JetBrains.ReSharper.Plugins.FSharp.Tests.Features
 
+open System.Linq
+open JetBrains.ProjectModel
+open JetBrains.ReSharper.FeaturesTestFramework.Refactorings
 open JetBrains.ReSharper.Plugins.FSharp.Psi.Features.Intentions
+open JetBrains.ReSharper.Plugins.FSharp.Services.Formatter
 open JetBrains.ReSharper.Plugins.FSharp.Tests.Features
+open JetBrains.ReSharper.TestFramework
 open NUnit.Framework
 
 type DeconstructPatternTest() =
     inherit FSharpContextActionExecuteTestBase<DeconstructPatternContextAction>()
 
     override this.ExtraPath = "deconstruct"
+
+    override this.DoTest(lifetime, testProject) =
+        let popupMenu = this.Solution.GetComponent<TestWorkflowPopupMenu>()
+        popupMenu.SetTestData(lifetime, fun _ occurrences _ _ _ -> occurrences.FirstOrDefault())
+        base.DoTest(lifetime, testProject)
 
     [<Test>] member x.``Tuple - Accessor 01``() = x.DoNamedTest()
     [<Test>] member x.``Tuple - Lambda 01``() = x.DoNamedTest()
@@ -58,6 +68,8 @@ type DeconstructPatternTest() =
     [<Test>] member x.``Union case - Single - Used 03``() = x.DoNamedTest()
     [<Test>] member x.``Union case - Single 01``() = x.DoNamedTest()
     [<Test>] member x.``Union case - Single 02 - Escaped``() = x.DoNamedTest()
+    [<TestSetting(typeof<FSharpFormatSettingsKey>, "SpaceBeforeUppercaseInvocation", "true")>]
+    [<Test>] member x.``Union case - Single 03 - Space``() = x.DoNamedTest()
 
     [<Test>] member x.``Union case fields - Generic 01``() = x.DoNamedTest()
     [<Test>] member x.``Union case fields - Generic 02``() = x.DoNamedTest()

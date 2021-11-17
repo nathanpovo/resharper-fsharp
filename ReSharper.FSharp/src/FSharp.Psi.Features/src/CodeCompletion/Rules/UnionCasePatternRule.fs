@@ -64,6 +64,7 @@ type UnionCasePatternBehavior(info: UnionCasePatternInfo) =
     inherit TextualBehavior<UnionCasePatternInfo>(info)
 
     override this.Accept(textControl, nameRange, _, _, solution, _) =
+        use writeCookie = WriteLockCookie.Create(true)
         use pinCheckResultsCookie =
             textControl.GetFSharpFile(solution).PinTypeCheckResults(true, UnionCasePatternInfo.Id)
 

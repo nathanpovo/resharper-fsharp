@@ -731,6 +731,11 @@ namespace JetBrains.ReSharper.Plugins.FSharp.Psi.Impl
       return fsExpr;
     }
 
+    public static IFSharpExpression IgnoreSingleInnerParens([CanBeNull] this IFSharpExpression fsExpr) =>
+      fsExpr is IParenExpr { InnerExpression: var innerExpr }
+        ? innerExpr
+        : fsExpr;
+
     public static IFSharpPattern IgnoreParentParens([CanBeNull] this IFSharpPattern fsPattern) =>
       fsPattern.GetOutermostNode<IFSharpPattern, IParenPat>();
 

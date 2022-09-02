@@ -21,7 +21,11 @@ namespace JetBrains.ReSharper.Plugins.FSharp.Psi.Impl
 
     public static bool IsExplicitImplementation(this IOverridableMemberDeclaration memberDecl) =>
       InterfaceImplementationNavigator.GetByTypeMember(memberDecl) != null ||
-      ObjExprNavigator.GetByMemberDeclaration(memberDecl) is {ArgExpression: null} ||
+      ObjExprNavigator.GetByMemberDeclaration(memberDecl) is {ArgExpression: null} || // todo: why arg null?
+      ObjExprNavigator.GetByInterfaceMember(memberDecl) != null;
+    
+    public static bool IsObjExpressionMember([CanBeNull] this IOverridableMemberDeclaration memberDecl) =>
+      ObjExprNavigator.GetByMemberDeclaration(memberDecl) != null ||
       ObjExprNavigator.GetByInterfaceMember(memberDecl) != null;
   }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using FSharp.Compiler.Symbols;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Plugins.FSharp.Psi.Tree;
+using JetBrains.ReSharper.Plugins.FSharp.Psi.Util;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.Util;
@@ -38,6 +39,15 @@ namespace JetBrains.ReSharper.Plugins.FSharp.Psi.Impl.DeclaredElement
     {
       get
       {
+        if (GetDeclaration() is IOverridableMemberDeclaration decl && decl.IsObjExpressionMember())
+        {
+          var declaredElement = Mfv.GetDeclaredElement(decl.GetPsiModule());
+          if (declaredElement is IFSharpTypeParametersOwner fSharpTypeParametersOwner)
+            return fSharpTypeParametersOwner.AllTypeParameters;
+        }
+
+        // if inside obj expression, get declaring entity, get its type parameters
+      
         var mfvTypeParams = MfvTypeParameters;
         var mfvParametersCount = mfvTypeParams.Count;
         if (mfvParametersCount == 0)

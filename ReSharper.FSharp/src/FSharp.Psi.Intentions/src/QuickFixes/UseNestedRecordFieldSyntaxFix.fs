@@ -30,7 +30,7 @@ type UseNestedRecordFieldSyntaxFix(warning: NestedWithCanBeSimplifiedWarning) =
     let updateExpr, fieldName =
         let fieldPath = List()
         fieldPath.AddRange (bindingExpr.ReferenceName.GetNames())
-        getFieldToUpdateData bindingExpr.Expression fieldPath, String.concat "." fieldPath
+        getFieldToUpdateData bindingExpr.Expression fieldPath, fieldPath
 
     override this.IsAvailable _ = isValid bindingExpr
     override this.Text = $"Replace with '{fieldName} = ...'"

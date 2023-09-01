@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Plugins.FSharp.Psi.Resolve;
@@ -75,6 +76,22 @@ namespace JetBrains.ReSharper.Plugins.FSharp.Psi.Impl.Tree
       {
         var shortName = referenceName.ShortName;
         if (shortName.IsEmpty() || shortName == SharedImplUtil.MISSING_DECLARATION_NAME)
+          break;
+
+        result.Insert(0, shortName);
+        referenceName = referenceName.Qualifier;
+      }
+
+      return result;
+    }
+
+    public static IList<string> GetSuffix([CanBeNull] this IReferenceName referenceName, Func<IReferenceName, bool> predicate)
+    {
+      var result = new List<string>();
+      while (referenceName != null)
+      {
+        var shortName = referenceName.ShortName;
+        if (shortName.IsEmpty() || shortName == SharedImplUtil.MISSING_DECLARATION_NAME || !predicate(referenceName))
           break;
 
         result.Insert(0, shortName);

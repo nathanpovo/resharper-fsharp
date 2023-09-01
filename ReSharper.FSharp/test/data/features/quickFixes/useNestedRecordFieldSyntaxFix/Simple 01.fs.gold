@@ -1,0 +1,6 @@
+﻿type Record1 = { Foo: int; Bar: int }
+type Record2 = { Foo: Record1; Bar: Record1 }
+
+let item: Record2 = null
+
+{ item with Foo{caret}.Foo = 3 }

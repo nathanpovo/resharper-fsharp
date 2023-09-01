@@ -93,6 +93,10 @@
         <Title resourceName="RedundantInIndexer" resourceType="Strings"/>
         <Description resourceName="CanBeRemovedInIndexers" resourceType="Strings"/>
       </Tag>
+      <Tag name="NestedWithCanBeSimplified" default="SUGGESTION">
+        <Title resourceName="NestedWithCanBeSimplifiedMessage" resourceType="Strings"/>
+        <Description resourceName="NestedWithCanBeSimplifiedMessage" resourceType="Strings"/>
+      </Tag>
 
     </Group>
   </SeverityConfiguration>
@@ -325,5 +329,12 @@
     <Behavour attributeID="DEADCODE" overlapResolvePolicy="DEADCODE"/>
     <Range>getIndexerDotRange indexerExpr</Range>
     <QuickFix>RemoveIndexerDotFix</QuickFix>
+  </Warning>
+
+  <Warning name="NestedWithCanBeSimplified" configurableSeverity="NestedWithCanBeSimplified">
+    <Parameter type="IRecordFieldBinding" name="binding"/>
+    <Message resourceName="NestedWithCanBeSimplifiedMessage" resourceType="Strings"/>
+    <Range>binding.GetHighlightingRange()</Range>
+    <QuickFix>UseNestedRecordFieldSyntaxFix</QuickFix>
   </Warning>
 </Errors>
